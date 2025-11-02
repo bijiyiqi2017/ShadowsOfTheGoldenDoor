@@ -30,6 +30,10 @@ MAZE_OFFSET_Y = 80  # Offset from top to leave room for title
 TITLE_SCREEN = "title"
 GAME_PLAYING = "playing"
 
+# Music Settings
+MUSIC_VOLUME = 0.5  # Default volume (0.0 to 1.0)
+VOLUME_STEP = 0.1  # How much to increase/decrease volume
+
 # Display Window
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption("Shadows of the Golden Door")
@@ -113,7 +117,7 @@ button_click_sound, _ = load_sound('assets/sounds/button_click.wav')
 # Try to load background music
 try:
     pygame.mixer.music.load('assets/sounds/background_music.mp3')
-    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.set_volume(MUSIC_VOLUME)
     music_loaded = True
     print("✓ Loaded background music")
 except (pygame.error, FileNotFoundError):
@@ -149,7 +153,7 @@ class Button:
                 if alpha > 0:
                     glow_surface = pygame.Surface((glow_rect.width, glow_rect.height), pygame.SRCALPHA)
                     glow_color = (*GOLD, alpha)
-                    pygame.draw.rect(glow_surface, glow_color, glow_surface.get_rect(), border_radius=40)
+                    pygame.draw.rect(glow_surface, glow_color, glow_surface.get_rect(), border_radius=8)
                     surface.blit(glow_surface, glow_rect.topleft)
         
         # Draw button image on top
@@ -313,6 +317,11 @@ else:
 
 player = Player(MAZE_OFFSET_X + CELL_SIZE + 5, MAZE_OFFSET_Y + CELL_SIZE + 5)
 game_state = TITLE_SCREEN
+current_music_volume = MUSIC_VOLUME
+
+# Start background music on title screen
+if music_loaded:
+    pygame.mixer.music.play(-1)  # Loop music
 
 
 # === DRAWING FUNCTIONS ===
