@@ -186,7 +186,7 @@ def draw_game_screen():
     # draw instructions
     instruction_text = "Move with WASD or Arrow Keys | ESC to return to title"
     instruction_surface = instruction_font.render(instruction_text, True, WHITE)
-    instruction_rect = instruction_surface.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT - 20))
+    instruction_rect = instruction_surface.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT - 8))
     screen.blit(instruction_surface, instruction_rect)
 
 # game loop
