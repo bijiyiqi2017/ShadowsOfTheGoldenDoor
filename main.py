@@ -137,29 +137,38 @@ class Button:
     
     def draw(self, surface):
         """Draw the button with optional glow effect."""
+        # Draw glow effect FIRST (behind the button)
+        if self.hovered:
+            # Create a glow border effect
+            glow_size = int(10 + (self.glow_alpha / 40) * 5)  # Pulsing size
+            glow_rect = self.rect.inflate(glow_size * 2, glow_size * 2)
+            
+            # Draw multiple layers for a softer glow
+            for i in range(3):
+                alpha = int(self.glow_alpha * (1 - i * 0.3))
+                if alpha > 0:
+                    glow_surface = pygame.Surface((glow_rect.width, glow_rect.height), pygame.SRCALPHA)
+                    glow_color = (*GOLD, alpha)
+                    pygame.draw.rect(glow_surface, glow_color, glow_surface.get_rect(), border_radius=40)
+                    surface.blit(glow_surface, glow_rect.topleft)
+        
+        # Draw button image on top
         image = self.hover_image if self.hovered else self.normal_image
         surface.blit(image, self.rect)
-        
-        # Draw glow effect when hovered
-        if self.hovered:
-            glow_surface = pygame.Surface((self.rect.width + 20, self.rect.height + 20))
-            glow_surface.set_alpha(self.glow_alpha)
-            glow_surface.fill(GOLD)
-            glow_rect = glow_surface.get_rect(center=self.rect.center)
-            surface.blit(glow_surface, glow_rect, special_flags=pygame.BLEND_RGB_ADD)
     
     def update(self, dt):
         """Update glow animation."""
         if self.hovered:
-            self.glow_alpha += self.glow_direction * 150 * dt
-            if self.glow_alpha >= 40:
-                self.glow_alpha = 40
+            self.glow_alpha += self.glow_direction * 200 * dt
+            if self.glow_alpha >= 80:
+                self.glow_alpha = 80
                 self.glow_direction = -1
-            elif self.glow_alpha <= 10:
-                self.glow_alpha = 10
+            elif self.glow_alpha <= 30:
+                self.glow_alpha = 30
                 self.glow_direction = 1
         else:
             self.glow_alpha = 0
+            self.glow_direction = 1
     
     def check_hover(self, pos):
         """Check if mouse is hovering over button."""
