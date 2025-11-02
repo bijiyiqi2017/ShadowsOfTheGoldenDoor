@@ -46,7 +46,6 @@ try:
     button_hover = pygame.image.load('assets/button/start_button_hover.png')
     button_images_loaded = True
     print(f"Button images loaded successfully")
-    print(f"Button size: {button_normal.get_width()}x{button_normal.get_height()}")
 except (pygame.error, FileNotFoundError) as e:
     button_images_loaded = False
     print(f"Warning: Could not load button images. Error: {e}")
