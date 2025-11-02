@@ -404,12 +404,13 @@ while running:
                 if button_click_sound:
                     button_click_sound.play()
                 if music_loaded:
-                    pygame.mixer.music.play(-1)  # Loop background music
+                    pygame.mixer.music.stop()
         
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE and game_state == GAME_PLAYING:
                 game_state = TITLE_SCREEN
                 pygame.mixer.music.stop()
+                #pygame.mixer.music.play(-1)  Loop the Background Music when playing
     
     # Update
     if game_state == TITLE_SCREEN:
