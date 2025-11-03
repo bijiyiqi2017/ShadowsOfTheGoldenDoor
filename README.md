@@ -19,6 +19,14 @@ Here is an 8 image Storyboard to illustrate a desired direction and end results 
 
 ---
 
+## Demo
+
+### Current early prototype
+
+<img width="1534" height="783" alt="image" src="https://github.com/user-attachments/assets/c5026cef-375e-43cb-8b6a-6145f8be2f12" />
+
+
+
 ## Setup Guide
 
 This guide will help you set up your development environment to run and contribute to "Shadows of the Golden Door".
