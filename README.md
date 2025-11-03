@@ -225,6 +225,21 @@ If a game window opens with the title "Shadows of the Golden Door", congratulati
 
 ---
 
+## Contributor All Time Leaderboard 
+
+### (Contributions tracked from the project's inception, to be updated periodically)
+
+This leaderboard highlights contributors based on the number of merged pull requests and their contributions to the project.
+
+| Rank | Contributor          | Merged PRs | Notes                               |
+|------|----------------------|------------|-------------------------------------|
+| 1    | **@HirulaAbesignha** | 6          | Enhanced Game Experience, Maze Layout, Title Screen, Setup Guide, etc. |
+| 2    | @shanaya-Gupta       | 1          | Basic Player Movement               |
+| 3    | @adnan-47            | 1          | Setup Guide Documentation           |
+
+
+---
+
 ## Contributing
 
 Now that your environment is set up, you're ready to contribute! Check out our [Issues](https://github.com/bijiyiqi2017/ShadowsOfTheGoldenDoor/issues) page for tasks you can help with.
