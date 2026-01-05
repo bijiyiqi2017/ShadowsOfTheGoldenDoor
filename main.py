@@ -1,6 +1,7 @@
 import pygame
 import sys
 import math
+import random
 
 # Initialize Pygame
 pygame.init()
@@ -323,6 +324,29 @@ current_music_volume = MUSIC_VOLUME
 if music_loaded:
     pygame.mixer.music.play(-1)  # Loop music
 
+# === KEY SPAWN LOGIC ===
+def get_random_empty_cell(maze_layout):
+    """Find a random empty cell in the maze layout."""
+    empty_cells = [
+        (row, col)
+        for row in range(len(maze_layout))
+        for col in range(len(maze_layout[row]))
+        if maze_layout[row][col] == 0
+    ]
+    return random.choice(empty_cells) if empty_cells else None
+
+# Spawn the key at a random empty cell
+key_position = get_random_empty_cell(maze_layout)
+
+
+# === GAME RESTART LOGIC ===
+def restart_game():
+    """Restart the game by resetting the player and key positions."""
+    global player, key_position, game_state
+    player = Player(MAZE_OFFSET_X + CELL_SIZE + 5, MAZE_OFFSET_Y + CELL_SIZE + 5)
+    key_position = get_random_empty_cell(maze_layout)
+    game_state = GAME_PLAYING
+
 
 # === DRAWING FUNCTIONS ===
 
@@ -372,7 +396,13 @@ def draw_game_screen():
     
     # Draw player
     player.draw(screen)
-    
+
+    # Draw key
+    if key_position:
+        key_x = MAZE_OFFSET_X + key_position[1] * CELL_SIZE + CELL_SIZE // 4
+        key_y = MAZE_OFFSET_Y + key_position[0] * CELL_SIZE + CELL_SIZE // 4
+        pygame.draw.rect(screen, (255, 233, 0), (key_x, key_y, CELL_SIZE // 2, CELL_SIZE // 2))
+
     # Draw game title
     game_title = subtitle_font.render("Ancient Labyrinth", True, GOLD)
     game_title_rect = game_title.get_rect(center=(WINDOW_WIDTH // 2, 30))
@@ -429,6 +459,17 @@ while running:
         # Move player
         player.move(direction, dt, wall_rectangles)
         player.update(dt)
+
+        # Check if player touches the key
+        if key_position:
+            key_rect = pygame.Rect(
+                MAZE_OFFSET_X + key_position[1] * CELL_SIZE + CELL_SIZE // 4,
+                MAZE_OFFSET_Y + key_position[0] * CELL_SIZE + CELL_SIZE // 4,
+                CELL_SIZE // 2,
+                CELL_SIZE // 2
+            )
+            if player.get_rect().colliderect(key_rect):
+                restart_game()
     
     # Rendering
     if game_state == TITLE_SCREEN:
